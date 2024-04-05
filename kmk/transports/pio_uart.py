@@ -39,9 +39,10 @@ bitloop:                ; Loop 8 times
 '''
 rx_code = array('H', [8224, 59943, 16385, 1602])
 
+BAUDRATE = 4800#9600
 
 class PIO_UART:
-    def __init__(self, *, tx, rx, baudrate=9600):
+    def __init__(self, *, tx, rx, baudrate=BAUDRATE):
         if tx:
             self.tx_pio = rp2pio.StateMachine(
                 tx_code,

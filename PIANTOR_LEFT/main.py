@@ -16,7 +16,6 @@ print("LOADING PIANTOR LEFT...")
 '''
 keyboard = KMKKeyboard()
 keyboard.tap_time = 100
-#keyboard.debug_enabled = True
 '''
 '''
 '''
@@ -52,7 +51,8 @@ keyboard.modules.append(split)
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 '''
 holdtap = HoldTap()
-holdtap.tap_time = 100
+holdtap.tap_time = 80
+holdtap.tap_interrupted = True
 keyboard.modules.append(holdtap)
 LSFT_P  = KC.HT(KC.LPRN, KC.LSFT)
 RSFT_P  = KC.HT(KC.RPRN, KC.RSFT)
@@ -137,12 +137,12 @@ keyboard.modules.append(combos)
 combos.combos = [
     # ROW 1 - LEFT HAND                                                                         # ROW 1 - RIGHT HAND
     # ( Q + W = ESCAPE ), ( W + E = TAB )                                                       ( I + O = BACKSPACE ), ( O + P = DELETE ) 
-    Chord((Q_GRAV, KC.W), KC.ESCAPE), Chord((KC.W, KC.E), KC.TAB),                              Chord((KC.I, KC.O), KC.BSPC), Chord((KC.O, KC.P), KC.DEL),
+    Chord((Q_GRAV, KC.W), KC.ESCAPE, timeout=60), Chord((KC.W, KC.E), KC.TAB),                  Chord((KC.I, KC.O), KC.BSPC, timeout=60), Chord((KC.O, KC.P), KC.DEL),
     #
     #
     # ROW 2 - LEFT HAND                                                                         # ROW 2 - RIGHT HAND
-    # ( S + D = LAYER 1 ), ( F + G = "["" )                                                     ( H + J = "]" ), ( K + L = ENTER ) 
-    Chord((KC.S, KC.D), LAY_1), Chord((KC.F, KC.G), KC.LBRC),                                   Chord((KC.H, KC.J), KC.RBRC), Chord((KC.K, KC.L), KC.ENT),
+    # ( S + D = LAYER 1 ), ( D + F = "SPACE" )                                                  ( H + J = "]" ), ( K + L = ENTER )
+    Chord((KC.S, KC.D), LAY_1), Chord((KC.D, KC.F), KC.SPC),                                    Chord((KC.H, KC.J), KC.RBRC), Chord((KC.K, KC.L), KC.ENT),
     #
     #
     # ROW 3 - LEFT HAND                                                                         # ROW 3 - RIGHT HAND
