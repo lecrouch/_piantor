@@ -9,7 +9,7 @@ from kmk.modules.holdtap import HoldTap
 from kmk.modules.combos import Combos, Chord
 
 print(f"LOADING PIANTOR {'RIGHT' if isRight else 'LEFT'}...")
-# print("LOADING PIANTOR LEFT...")
+
 '''
 
  I N I T I A L I Z E  K E E B
@@ -17,6 +17,8 @@ print(f"LOADING PIANTOR {'RIGHT' if isRight else 'LEFT'}...")
 '''
 keyboard = KMKKeyboard()
 keyboard.tap_time = 100
+# todo: make sure this makes the media keys actually work
+keyboard.extensions.append(MediaKeys())
 '''
 '''
 '''
