@@ -26,6 +26,7 @@ keyboard.tap_time = 100
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 '''
 split_side = SplitSide.RIGHT if isRight else SplitSide.LEFT
+uart_flip = False if isRight else True
 
 data_pin = board.GP1  #RX
 data_pin2 = board.GP0 #TX
@@ -37,7 +38,7 @@ split = Split(
     split_target_left=True,
     data_pin=data_pin,
     data_pin2=data_pin2,
-    uart_flip=False,
+    uart_flip=uart_flip,
     use_pio=True
 )
 keyboard.modules.append(split)

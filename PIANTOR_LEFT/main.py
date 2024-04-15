@@ -8,7 +8,8 @@ from kmk.modules.tapdance import TapDance
 from kmk.modules.holdtap import HoldTap
 from kmk.modules.combos import Combos, Chord
 
-print("LOADING PIANTOR LEFT...")
+print(f"LOADING PIANTOR {'RIGHT' if isRight else 'LEFT'}...")
+# print("LOADING PIANTOR LEFT...")
 '''
 
  I N I T I A L I Z E  K E E B
@@ -26,6 +27,7 @@ keyboard.tap_time = 100
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 '''
 split_side = SplitSide.RIGHT if isRight else SplitSide.LEFT
+uart_flip = False if isRight else True
 
 data_pin = board.GP1  #RX
 data_pin2 = board.GP0 #TX
@@ -37,7 +39,7 @@ split = Split(
     split_target_left=True,
     data_pin=data_pin,
     data_pin2=data_pin2,
-    uart_flip=True,
+    uart_flip=uart_flip,
     use_pio=True
 )
 keyboard.modules.append(split)
@@ -53,6 +55,7 @@ keyboard.modules.append(split)
 holdtap = HoldTap()
 holdtap.tap_time = 80
 holdtap.tap_interrupted = True
+holdtap.prefer_hold = False
 keyboard.modules.append(holdtap)
 LSFT_P  = KC.HT(KC.LPRN, KC.LSFT)
 RSFT_P  = KC.HT(KC.RPRN, KC.RSFT)
@@ -71,10 +74,11 @@ keyboard.modules.append(layers)
 A_LT_1      = KC.LT(1, KC.A,        prefer_hold=False, tap_interrupted=True,  tap_time=120)
 B_LT_2      = KC.LT(2, KC.B,        prefer_hold=False, tap_interrupted=False, tap_time=130)
 N_LT_2      = KC.LT(2, KC.N,        prefer_hold=False, tap_interrupted=False, tap_time=130)
-SPC_LT_3    = KC.LT(3, KC.SPC,      prefer_hold=False, tap_interrupted=False, tap_time=130)
+SPC_LT_3    = KC.LT(3, KC.SPC,      prefer_hold=False, tap_interrupted=True, tap_time=130)
 Z_LT_3      = KC.LT(3, KC.Z,        prefer_hold=False, tap_interrupted=False, tap_time=130)
 
 LAY_1 = KC.MO(1)
+LAY_0 = KC.TO(0)
 '''
 '''
 '''
@@ -271,7 +275,7 @@ keyboard.keymap = [
     # |---------+---------+---------+---------+---------+---------|                              |---------+---------+---------+---------+---------+---------|
     # |         |         |         |         |    {    |    [    |                              |    ]    |    }    |         |         |         |    \    |
     # |---------+---------+---------+---------+---------+---------|                              |---------+---------+---------+---------+---------+---------|
-    # |         |         |         |         |    _    |    -    |---------.           ,--------|    =    |    +    |         |         |         |         |
+    # |         |         |         |         |    _    |    -    |---------.           ,--------|    =    |    +    |         |         |         |  LAY_0  |
     # `----------------------------------------------------------/         /            \         \----------------------------------------------------------'
     #                                    |         |         |  /         /              \         \  |         |         |
     #                                    |         |         | /         /                \         \ |         |         |
@@ -281,7 +285,7 @@ keyboard.keymap = [
     #   ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾                        ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
         KC.TILD, _______, _______, _______, KC.LPRN, KC.LABK,                                           KC.RABK, KC.RPRN, _______, _______, _______, _______,
         _______, _______, _______, _______, KC.LCBR, KC.LBRC,                                           KC.RBRC, KC.RCBR, _______, _______, _______, KC.BSLS,
-        _______, _______, _______, _______, KC.UNDS, KC.MINS,                                           KC.EQL,  KC.PLUS, _______, _______, _______, _______,
+        _______, _______, _______, _______, KC.UNDS, KC.MINS,                                           KC.EQL,  KC.PLUS, _______, _______, _______, LAY_0,
                                             _______, _______, _______,                         _______, _______, _______,
     #   ____________________________________                                                                            _____________________________________
     #                                       __________________________                        __________________________
