@@ -17,7 +17,6 @@ print(f"LOADING PIANTOR {'RIGHT' if isRight else 'LEFT'}...")
 '''
 keyboard = KMKKeyboard()
 keyboard.tap_time = 100
-# todo: make sure this makes the media keys actually work
 keyboard.extensions.append(MediaKeys())
 '''
 '''
@@ -57,11 +56,12 @@ keyboard.modules.append(split)
 holdtap = HoldTap()
 holdtap.tap_time = 80
 holdtap.tap_interrupted = True
-holdtap.prefer_hold = False
+holdtap.prefer_hold = True
 keyboard.modules.append(holdtap)
-LSFT_P  = KC.HT(KC.LPRN, KC.LSFT)
+LSFT_P  = KC.HT(KC.LPRN, KC.LSFT, tap_time=70)
 RSFT_P  = KC.HT(KC.RPRN, KC.RSFT)
 SLSH_OP = KC.HT(KC.SLSH, KC.LALT, tap_time=140)
+G_OP    = KC.HT(KC.G,    KC.LALT, tap_time=90)
 '''
 '''
 '''
@@ -92,7 +92,7 @@ LAY_0 = KC.TO(0)
 '''
 tapdance = TapDance()
 #tapdance.tap_time = 300
-tapdance.tap_time = 150
+tapdance.tap_time = 180
 keyboard.modules.append(tapdance)
 L_CAR = KC.TD(
     # Tap once for "t"
@@ -143,7 +143,7 @@ keyboard.modules.append(combos)
 combos.combos = [
     # ROW 1 - LEFT HAND                                                                         # ROW 1 - RIGHT HAND
     # ( Q + W = ESCAPE ), ( W + E = TAB )                                                       ( I + O = BACKSPACE ), ( O + P = DELETE ) 
-    Chord((Q_GRAV, KC.W), KC.ESCAPE, timeout=60), Chord((KC.W, KC.E), KC.TAB),                  Chord((KC.I, KC.O), KC.BSPC, timeout=60), Chord((KC.O, KC.P), KC.DEL),
+    Chord((Q_GRAV, KC.W), KC.ESCAPE, timeout=40), Chord((KC.W, KC.E), KC.TAB),                  Chord((KC.I, KC.O), KC.BSPC, timeout=60), Chord((KC.O, KC.P), KC.DEL),
     #
     #
     # ROW 2 - LEFT HAND                                                                         # ROW 2 - RIGHT HAND
@@ -195,9 +195,9 @@ keyboard.keymap = [
     # ,-----------------------------------------------------------.                              ,-----------------------------------------------------------.
     # |  Tab    |    Q    |    W    |    E    |    R    |    T    |                              |    Y    |    U    |    I    |    O    |    P    |  BCKSPC |
     # |---------+---------+---------+---------+---------+---------|                              |---------+---------+---------+---------+---------+---------|
-    # |  LAY_1  |    A    |    S    |    D    |    F    |    G    |                              |    H    |    J    |    K    |    L    |    ;    |  ENTER  |
+    # |  LAY_1  |    A    |    S    |    D    |    F    |  G_OP   |                              |    H    |    J    |    K    |    L    |    ;    |  ENTER  |
     # |---------+---------+---------+---------+---------+---------|                              |---------+---------+---------+---------+---------+---------|
-    # |  LALT   | Z_LT_3  |    X    |    C    |    V    |  B_TD   |---------.           ,--------| N_LT_2  |    M    |    ,    |    .    | SLSH_OP |  RSFT   |
+    # |  LALT   | Z_LT_3  |    X    |    C    |    V    | B_LT_2  |---------.           ,--------| N_LT_2  |    M    |    ,    |    .    | SLSH_OP |  RSFT   |
     # `----------------------------------------------------------/         /            \         \----------------------------------------------------------'
     #                                    |  LCTL   | LSFT_P  |  /  LGUI   /              \ SPC_LT_3\  | RSFT_P  |  QUOT   |
     #                                    |         |         | /         /                \         \ |         |         |
@@ -206,8 +206,8 @@ keyboard.keymap = [
     #
     #   ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾                        ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
         KC.TAB,  Q_GRAV,  KC.W,    KC.E,    KC.R,    KC.T,                                              KC.Y,    KC.U,    KC.I,    KC.O,    KC.P,    KC.BSPC,
-        LAY_1,   KC.A,    KC.S,    KC.D,    KC.F,    KC.G,                                              KC.H,    KC.J,    KC.K,    KC.L,    KC.SCLN, KC.ENT,
-        KC.LALT, Z_LT_3,  KC.X,    KC.C,    KC.V,    B_TD,                                            N_LT_2,  KC.M,    KC.COMM, KC.DOT,  SLSH_OP, KC.RSFT,
+        LAY_1,   KC.A,    KC.S,    KC.D,    KC.F,    G_OP,                                              KC.H,    KC.J,    KC.K,    KC.L,    KC.SCLN, KC.ENT,
+        KC.LALT, Z_LT_3,  KC.X,    KC.C,    KC.V,    B_LT_2,                                            N_LT_2,  KC.M,    KC.COMM, KC.DOT,  SLSH_OP, KC.RSFT,
                                             KC.LCTL, LSFT_P,  KC.LGUI,                        SPC_LT_3, RSFT_P,  KC.QUOT,
     #   ____________________________________                                                                            _____________________________________
     #                                       __________________________                        __________________________
