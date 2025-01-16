@@ -2,6 +2,7 @@
 Circuit Python wrapper around PIO implementation of UART
 Original source of these examples: https://github.com/adafruit/Adafruit_CircuitPython_PIOASM/tree/main/examples (MIT)
 '''
+
 import rp2pio
 from array import array
 
@@ -39,10 +40,9 @@ bitloop:                ; Loop 8 times
 '''
 rx_code = array('H', [8224, 59943, 16385, 1602])
 
-BAUDRATE = 4800#9600
 
 class PIO_UART:
-    def __init__(self, *, tx, rx, baudrate=BAUDRATE):
+    def __init__(self, *, tx, rx, baudrate=9600):
         if tx:
             self.tx_pio = rp2pio.StateMachine(
                 tx_code,

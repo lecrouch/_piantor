@@ -4,7 +4,6 @@ except ImportError:
     pass
 from micropython import const
 
-import kmk.handlers.stock as handlers
 from kmk.keys import Key, make_key
 from kmk.kmk_keyboard import KMKKeyboard
 from kmk.modules import Module
@@ -54,10 +53,7 @@ class Combo:
             self._match_coord = match_coord
 
     def __repr__(self):
-        if self._match_coord:
-            return f'{self.__class__.__name__}({list(self.match)})'
-        else:
-            return f'{self.__class__.__name__}({[k.code for k in self.match]})'
+        return f'{self.__class__.__name__}({list(self.match)})'
 
     def matches(self, key: Key, int_coord: int):
         raise NotImplementedError
@@ -109,11 +105,7 @@ class Combos(Module):
         self.combos = combos
         self._key_buffer = []
 
-        make_key(
-            names=('LEADER', 'LDR'),
-            on_press=handlers.passthrough,
-            on_release=handlers.passthrough,
-        )
+        make_key(names=('LEADER', 'LDR'))
 
     def during_bootup(self, keyboard):
         self.reset(keyboard)
@@ -303,7 +295,7 @@ class Combos(Module):
             self.reset_combo(keyboard, combo)
 
     def send_key_buffer(self, keyboard):
-        for (int_coord, key, is_pressed) in self._key_buffer:
+        for int_coord, key, is_pressed in self._key_buffer:
             keyboard.resume_process_key(self, key, is_pressed, int_coord)
 
     def activate(self, keyboard, combo):
